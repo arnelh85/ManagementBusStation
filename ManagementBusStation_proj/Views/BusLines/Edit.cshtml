@@ -1,0 +1,62 @@
+﻿@model ManagementBusStation.Models.BusLine
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal col-xs-10 col-xs-pull-2 col-xs-offset-5">
+        <h2 style="margin-top:200px;margin-left:50px;font-family:Helvetica;color:#B88E1D;">PROMJENA AUTOBUSKIH LINIJA</h2>
+        <br />
+        <br />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.CityOfDeparture, htmlAttributes: new { @class = "control-label col-xs-2", @style = "font-family:Helvetica;color:#B88E1D;" })
+            <div class="col-xs-10">
+                @Html.EditorFor(model => model.CityOfDeparture, new { htmlAttributes = new { @class = "form-control", @style = "border:1px solid #B88E1D;border-radius:3px;color:#111212;" } })
+                @Html.ValidationMessageFor(model => model.CityOfDeparture, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CityOfArrival, htmlAttributes: new { @class = "control-label col-xs-2", @style = "font-family:Helvetica;color:#B88E1D;" })
+            <div class="col-xs-10">
+                @Html.EditorFor(model => model.CityOfArrival, new { htmlAttributes = new { @class = "form-control", @style = "border:1px solid #B88E1D;border-radius:3px;color:#111212;" } })
+                @Html.ValidationMessageFor(model => model.CityOfArrival, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TimeOfDeparture, htmlAttributes: new { @class = "control-label col-xs-2", @style = "font-family:Helvetica;color:#B88E1D;" })
+            <div class="col-xs-10">
+                @Html.TextBoxFor(model => model.TimeOfDeparture, "{0:s}", new { @type = "datetime-local", @class = "form-control", @style = "border:1px solid #B88E1D;border-radius:3px;color:#111212;" })
+                @Html.ValidationMessageFor(model => model.TimeOfDeparture, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TimeOfArrival, htmlAttributes: new { @class = "control-label col-xs-2", @style = "font-family:Helvetica;color:#B88E1D;" })
+            <div class="col-xs-10">
+                @Html.TextBoxFor(model => model.TimeOfArrival, "{0:s}", new { @type = "datetime-local", @class = "form-control", @style = "border:1px solid #B88E1D;border-radius:3px;color:#111212;" })
+                @Html.ValidationMessageFor(model => model.TimeOfArrival, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.BusId, "ID autobusa", htmlAttributes: new { @class = "control-label col-xs-2", @style = "font-family:Helvetica;color:#B88E1D;" })
+            <div class="col-xs-10">
+                @Html.DropDownList("BusId", null, htmlAttributes: new { @class = "form-control", @style = "border:1px solid #B88E1D;border-radius:3px;color:#111212;" })
+                @Html.ValidationMessageFor(model => model.BusId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-10 col-xs-push-3">
+                <input type="submit" value="Promijeni" class="btn btn-lg btn-warning" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval") 
+}

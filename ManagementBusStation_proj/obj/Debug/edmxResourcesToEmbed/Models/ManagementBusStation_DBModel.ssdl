@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ManagementBusStation_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Buses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusCompany" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="SeatCapacity" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BusLines">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CityOfDeparture" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CityOfArrival" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TimeOfDeparture" Type="datetime" Nullable="false" />
+    <Property Name="TimeOfArrival" Type="datetime" Nullable="false" />
+    <Property Name="BusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeLastName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="EmployeeFirstName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="EmployeePersonalIdNo" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="EmployeeCountry" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="EmployeeCity" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="EmployeePhoneNumber" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="EmployeeEmailAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeePassword" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="EmployeeTypeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeTypeNo" Type="int" Nullable="false" />
+    <Property Name="EmployeeTypeName" Type="nvarchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicketSales">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TicketNo" Type="nvarchar" MaxLength="12" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustomerAge" Type="int" Nullable="false" />
+    <Property Name="TicketPrice" Type="decimal" Precision="4" Scale="1" Nullable="false" />
+    <Property Name="Currency" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Discount" Type="decimal" Precision="2" Scale="1" Nullable="false" />
+    <Property Name="TotalAmount" Type="decimal" Precision="4" Scale="1" Nullable="false" />
+    <Property Name="IsPaid" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicketSalesByBusLines">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TicketSaleId" Type="int" Nullable="false" />
+    <Property Name="BusLineId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Buses_BusLines">
+    <End Role="Buses" Type="Self.Buses" Multiplicity="1" />
+    <End Role="BusLines" Type="Self.BusLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BusLines">
+        <PropertyRef Name="BusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BusLines_TicketSalesByBusLines">
+    <End Role="BusLines" Type="Self.BusLines" Multiplicity="1" />
+    <End Role="TicketSalesByBusLines" Type="Self.TicketSalesByBusLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BusLines">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TicketSalesByBusLines">
+        <PropertyRef Name="BusLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employees_TicketSales">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+    <End Role="TicketSales" Type="Self.TicketSales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TicketSales">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeTypes_Employees">
+    <End Role="EmployeeTypes" Type="Self.EmployeeTypes" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="EmployeeTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TicketSales_TicketSalesByBusLines">
+    <End Role="TicketSales" Type="Self.TicketSales" Multiplicity="1" />
+    <End Role="TicketSalesByBusLines" Type="Self.TicketSalesByBusLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TicketSales">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TicketSalesByBusLines">
+        <PropertyRef Name="TicketSaleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ManagementBusStation_DBModelStoreContainer">
+    <EntitySet Name="Buses" EntityType="Self.Buses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusLines" EntityType="Self.BusLines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeTypes" EntityType="Self.EmployeeTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketSales" EntityType="Self.TicketSales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketSalesByBusLines" EntityType="Self.TicketSalesByBusLines" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Buses_BusLines" Association="Self.FK_Buses_BusLines">
+      <End Role="Buses" EntitySet="Buses" />
+      <End Role="BusLines" EntitySet="BusLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BusLines_TicketSalesByBusLines" Association="Self.FK_BusLines_TicketSalesByBusLines">
+      <End Role="BusLines" EntitySet="BusLines" />
+      <End Role="TicketSalesByBusLines" EntitySet="TicketSalesByBusLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employees_TicketSales" Association="Self.FK_Employees_TicketSales">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="TicketSales" EntitySet="TicketSales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeTypes_Employees" Association="Self.FK_EmployeeTypes_Employees">
+      <End Role="EmployeeTypes" EntitySet="EmployeeTypes" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TicketSales_TicketSalesByBusLines" Association="Self.FK_TicketSales_TicketSalesByBusLines">
+      <End Role="TicketSales" EntitySet="TicketSales" />
+      <End Role="TicketSalesByBusLines" EntitySet="TicketSalesByBusLines" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

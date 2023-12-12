@@ -1,0 +1,40 @@
+﻿@model ManagementBusStation.Models.Employee
+
+@{
+    ViewBag.Title = "Login";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+   
+    <div class="form-horizontal col-xs-10 col-xs-pull-2 col-xs-offset-5">
+        <h2 style="margin-top:200px;margin-left:130px;font-family:Helvetica;color:#0000FF;">PRIJAVA ZAPOSLENIKA</h2>
+        <br />
+        <br />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeEmailAddress, htmlAttributes: new { @class = "control-label col-xs-2", @style = "font-family:Helvetica;color:#0000FF;" })
+            <div class="col-xs-10">
+                @Html.EditorFor(model => model.EmployeeEmailAddress, new { htmlAttributes = new { @class = "form-control", @style = "border:1px solid #0000FF;border-radius:3px;" } })
+                @Html.ValidationMessageFor(model => model.EmployeeEmailAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeePassword, htmlAttributes: new { @class = "control-label col-xs-2", @style = "font-family:Helvetica;color:#0000FF;" })
+            <div class="col-xs-10">
+                @Html.EditorFor(model => model.EmployeePassword, new { htmlAttributes = new { @class = "form-control", @style = "border:1px solid #0000FF;border-radius:3px;" } })
+                @Html.ValidationMessageFor(model => model.EmployeePassword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-10 col-xs-push-3">
+                <input type="submit" value="Prijavi" class="btn btn-lg btn-primary" /> 
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

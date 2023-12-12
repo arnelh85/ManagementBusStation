@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body class="bg-info">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>                                                             
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @if (Session["login_email"] != null && Session["IsAdmin"] != null)
+                        {
+                            <li><p style="padding-top:15px;font-family:Helvetica;font-size:13px;font-weight:bold;color:#28CEE0;">LOGGED USER: @Session["employeeFullName"]</p></li>
+                            <li>@Html.ActionLink("ZAPOSLENICI", "Index", "Employees", null, new { @style = "color:#DEDE18;" })</li>                            
+                            <li>@Html.ActionLink("AUTOBUSI", "Index", "Buses", null, new { @style = "color:#DEDE18;" })</li>
+                            <li>@Html.ActionLink("AUTOBUSKE LINIJE", "Index", "BusLines", null, new { @style = "color:#DEDE18;" })</li>
+                            <li>@Html.ActionLink("POLASCI", "GetDeparturesNotifications", "BusLines", null, new { @style = "color:#DEDE18;" })</li>
+                            <li>@Html.ActionLink("DOLASCI", "GetArrivalsNotifications", "BusLines", null, new { @style = "color:#DEDE18;" })</li>
+                            <li>@Html.ActionLink("ODJAVA", "Logout", "Authorization", null, new { @style = "color:#ED0E2C;" })</li>
+                        }
+                        else if (Session["login_email"] != null && Session["IsUser"] != null)
+                        {
+                            <li><p style="padding-top:15px;font-family:Helvetica;font-size:13px;font-weight:bold;color:#28CEE0;">LOGGED USER: @Session["employeeFullName"]</p></li>
+                            <li>@Html.ActionLink("AUTOBUSI", "Index", "Buses", null, new { @style = "color:#DEDE18;" })</li>                           
+                            <li>@Html.ActionLink("AUTOBUSKE LINIJE", "Index", "BusLines", null, new { @style = "color:#DEDE18;" })</li>
+                            <li>@Html.ActionLink("POLASCI", "GetDeparturesNotifications", "BusLines", null, new { @style = "color:#DEDE18;" })</li>
+                            <li>@Html.ActionLink("DOLASCI", "GetArrivalsNotifications", "BusLines", null, new { @style = "color:#DEDE18;" })</li>
+                            <li>@Html.ActionLink("ODJAVA", "Logout", "Authorization", null, new { @style = "color:#ED0E2C;" })</li>
+                        }
+                    </ul>                    
+                </div>
+            </div>
+        </div>
+        <div style="width:100%;height:50px;position:fixed;bottom:0;padding:15px 0 0 0;text-align:center;font-family:Helvetica;font-size:14px;font-weight:bold;color:#28CEE0;background-color:#000;">           
+            <p>UPRAVLJANJE AUTOBUSKOM STANICOM, Copyright &copy;@DateTime.Now.Year - HODŽIĆ ARNEL</p>           
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />            
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false) 
+    </body>
+</html>

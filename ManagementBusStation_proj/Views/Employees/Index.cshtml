@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ManagementBusStation.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <h2 style="margin-top:100px;margin-left:430px;font-family:Helvetica;color:#111212;">LISTA ZAPOSLENIKA</h2>
+    <br />
+    <br />
+    @Html.ActionLink("Dodaj", "Create", "Employees", routeValues: new { controller = "Employees", action = "Create" }, htmlAttributes: new { @class = "btn btn-md btn-success" })
+</div>  
+
+<table class="table table-bordered table-responsive">
+    <tr style="border:3px solid #03A9FC;">
+        <th style="border:3px solid #03A9FC;" class="text-center text-uppercase">
+            @Html.DisplayNameFor(model => model.EmployeeName)
+        </th>
+        <th style="border:3px solid #03A9FC;" class="text-center text-uppercase">
+            @Html.DisplayNameFor(model => model.EmployeeAge)
+        </th>
+        <th style="border:3px solid #03A9FC;" class="text-center text-uppercase">
+            @Html.DisplayNameFor(model => model.EmployeeCountry)
+        </th>
+        <th style="border:3px solid #03A9FC;" class="text-center text-uppercase">
+            @Html.DisplayNameFor(model => model.EmployeeCity)
+        </th>
+        <th style="border:3px solid #03A9FC;" class="text-center text-uppercase">
+            @Html.DisplayNameFor(model => model.EmployeePhoneNumber)
+        </th>
+        <th style="border:3px solid #03A9FC;" class="text-center text-uppercase">
+            @Html.DisplayNameFor(model => model.EmployeeEmailAddress)
+        </th>       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr style="border:2px solid #03A9FC;">
+        <td style="border:2px solid #03A9FC;" class="text-center">
+            @Html.DisplayFor(modelItem => item.EmployeeName)
+        </td>
+        <td style="border:2px solid #03A9FC;" class="text-center">
+            @Html.DisplayFor(modelItem => item.EmployeeAge)
+        </td>
+        <td style="border:2px solid #03A9FC;" class="text-center">
+            @Html.DisplayFor(modelItem => item.EmployeeCountry)
+        </td>
+        <td style="border:2px solid #03A9FC;" class="text-center">
+            @Html.DisplayFor(modelItem => item.EmployeeCity)
+        </td>
+        <td style="border:2px solid #03A9FC;" class="text-center">
+            @Html.DisplayFor(modelItem => item.EmployeePhoneNumber)
+        </td>
+        <td style="border:2px solid #03A9FC;" class="text-center">
+            @Html.DisplayFor(modelItem => item.EmployeeEmailAddress)
+        </td>        
+        <td class="text-center">
+            @Html.ActionLink("Promijeni", "Edit", "Employees", routeValues: new { id = item.Id }, htmlAttributes: new { @class = "btn btn-md btn-warning" })
+            @Html.ActionLink("Ukloni", "Delete", "Employees", routeValues: new { id = item.Id }, htmlAttributes: new { @class = "btn btn-md btn-danger" })
+        </td>
+    </tr>
+}
+</table>
